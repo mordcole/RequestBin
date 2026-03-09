@@ -37,11 +37,11 @@ const BinsPage = () => {
           <h2>My Baskets</h2>
           <ul>
             {Object.keys(localStorage).map((key) => (
-              <li key={key}>{key.replace('basket_', '')}</li>
+              <li key={key}>
+                <Link to={`/bins/${key.replace('basket_', '')}`}>{key.replace('basket_', '')}</Link>
+              </li>
             ))}
           </ul>
-
-        <Link to="/bins/123">Go to Bin 123</Link>
       </div>
     </>
   );
