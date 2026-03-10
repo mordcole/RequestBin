@@ -20,9 +20,8 @@ const BinsPage = () => {
           onSubmit={async (e: React.SubmitEvent<HTMLFormElement>) => {
             e.preventDefault();
             try {
-              const authToken = crypto.randomUUID();
-              await createBin(urlInput, authToken);
-              localStorage.setItem(`${BINS_STORAGE_PREFIX}${urlInput}`, authToken);
+              const bin = await createBin();
+              localStorage.setItem(`${BINS_STORAGE_PREFIX}${bin.bin_route}`, bin.token);
               setUrlInput(generateBinId());
             } catch (error: unknown) {
               alert("Failed to create a new bin.");
