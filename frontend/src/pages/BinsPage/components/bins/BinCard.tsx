@@ -55,49 +55,22 @@ export const BinCard = ({ route, onOpen, onDelete }: BinCardProps) => {
         </button>
       </div>
 
-      <div className="bin-card__meta">
-        <div className="bin-card__meta-row">
-          <span className="bin-card__requests">
-            <svg
-              className="bin-card__requests-icon"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-              ></path>
-            </svg>
-            0 Requests
-          </span>
-          <span className="bin-card__last-active">Just created</span>
-        </div>
-        <div className="bin-card__progress-bar">
-          <div className="bin-card__progress-bar-fill" />
-        </div>
-      </div>
-
-      <div className="bin-card__footer">
-        <button type="button" className="bin-card__open" onClick={onOpen}>
-          Open Inspector
-          <svg
-            className="bin-card__open-icon"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M14 5l7 7m0 0l-7 7m7-7H3"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2.5"
-            ></path>
-          </svg>
-        </button>
-      </div>
+      <button type="button" className="bin-card__open" onClick={onOpen}>
+        Open Bin
+        <svg
+          className="bin-card__open-icon"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            d="M14 5l7 7m0 0l-7 7m7-7H3"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="2.5"
+          ></path>
+        </svg>
+      </button>
     </div>
   );
 };

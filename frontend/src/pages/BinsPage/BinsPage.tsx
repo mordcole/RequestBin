@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createBin } from "./services";
 import { generateBinId } from "./utils";
-import { BinPageLayout } from "../../components/layout/BinPageLayout";
-import { PageHeader } from "../../components/layout/PageHeader";
-import { CreateBinPanel } from "../../components/bins/CreateBinPanel";
-import { BinCard } from "../../components/bins/BinCard";
+import { BinPageLayout } from "./components/layout/BinPageLayout";
+import { PageHeader } from "./components/layout/PageHeader";
+import { CreateBinPanel } from "./components/bins/CreateBinPanel";
+import { BinCard } from "./components/bins/BinCard";
 import "./BinsPage.css";
 
 const BINS_STORAGE_PREFIX = "basket_";
@@ -17,7 +17,7 @@ const BinsPage = () => {
   const navigate = useNavigate();
 
   const basketKeys = Object.keys(localStorage).filter((key) =>
-    key.startsWith(BINS_STORAGE_PREFIX)
+    key.startsWith(BINS_STORAGE_PREFIX),
   );
 
   const handleCreateBin = async () => {

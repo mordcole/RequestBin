@@ -47,7 +47,7 @@ export const CreateBinPanel = ({
 
       <form className="create-bin__form" onSubmit={handleSubmit}>
         <label className="create-bin__label">
-          <span className="create-bin__label-text">Bin Name (optional)</span>
+          <span className="create-bin__label-text">Bin URL</span>
           <input
             className="create-bin__input"
             placeholder="e.g., Stripe Webhooks"
@@ -56,17 +56,11 @@ export const CreateBinPanel = ({
           />
         </label>
 
-        <div className="create-bin__preview">
-          <div className="create-bin__preview-label">URL Preview</div>
-          <div className="create-bin__preview-value">
-            https://requestbin.io/v1/
-            <span className="create-bin__preview-value-muted">
-              {value || "auto-generated"}
-            </span>
-          </div>
-        </div>
-
-        <button className="create-bin__button" type="submit" disabled={isCreating}>
+        <button
+          className="create-bin__button"
+          type="submit"
+          disabled={isCreating}
+        >
           <svg
             className="create-bin__button-icon"
             fill="none"

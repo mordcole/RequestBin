@@ -5,8 +5,6 @@ import type { Bin, CreateBinPayload } from "../../types/request-bin";
 
 // const apiClient =
 
-
-
 const createBin = async (url: string, authToken: string): Promise<Bin> => {
   try {
     const payload: CreateBinPayload = {
@@ -17,7 +15,7 @@ const createBin = async (url: string, authToken: string): Promise<Bin> => {
     };
     const response = await axios.post<Bin>(
       "https://69ade7f2b50a169ec8808476.mockapi.io/bins/bins",
-      payload
+      payload,
     );
     return response.data;
   } catch (error) {

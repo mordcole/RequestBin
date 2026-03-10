@@ -11,38 +11,17 @@
   font-weight: 600;
   letter-spacing: 0.01em;
   margin: 0 0 4px;
-  color: #0f172a;
+  color: #111827;
 }
 
 .page-header__subtitle {
   margin: 0;
   font-size: 13px;
-  color: #64748b;
+  color: #6b7280;
 }
 
 .page-header__actions {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-}
-
-.page-header__sort {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
-  font-size: 12px;
-  border-radius: 999px;
-  background-color: #f8fafc;
-  border: 1px solid #e2e8f0;
-  color: #64748b;
-}
-
-.page-header__sort-label {
-  color: #94a3b8;
-}
-
-.page-header__sort-value {
-  color: #0f172a;
-  font-weight: 500;
 }
