@@ -12,25 +12,42 @@ const formatDbTimestamp = (timestamp: Date): string => (
 );
 
 const parseRequestToDB = (req: Request): RequestData => {
-  let body: unknown;
-
-  if (req.body && typeof req.body == 'object') {
-    body = req.body;
-  } else {
-    body = req.rawBody;
-  }
-
-  if (body === undefined || body === '') {
-    body = {};
-  }
-
   return {
     method: req.method,
     parameters: req.params,
     headers: req.headers,
-    body,
+    body: req.rawBodyBuffer || req.body || {},
   }
 }
+
+const decodeBody = (body: any): object | string => {
+  const buffer = extractBuffer(body);
+
+  if (!buffer) {
+    if (body === undefined || body === null || body === '') {
+      return {};
+    }
+    return body;
+  }
+
+  const text = buffer.toString('utf8');
+
+  try {
+    return JSON.parse(text);
+  } catch {
+    return text;
+  }
+};
+
+const extractBuffer = (body: any): Buffer | undefined => {
+  if (Buffer.isBuffer(body)) return body;
+
+  if (body?._bsontype === 'Binary') {
+    return body.buffer ?? body.value?.();
+  }
+
+  return undefined;
+};
 
 const toBinRequest = (req: RequestWithBody, binRoute: string): BinRequest => ({
   method: req.method,
@@ -38,7 +55,7 @@ const toBinRequest = (req: RequestWithBody, binRoute: string): BinRequest => ({
   path: `/in/${binRoute}`,
   headers: req.headers as Record<string, string>,
   params: req.parameters as Record<string, string>,
-  body: req.body || {} as object | string,
+  body: decodeBody(req.body),
 });
 
 export const saveRequestToBin = async (binRoute: string, req: Request): Promise<BinRequest> => {
