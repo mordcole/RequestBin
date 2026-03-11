@@ -1,8 +1,8 @@
 import 'express';
 
-declare module 'express' {
+declare module 'express-serve-static-core' {
   interface Request {
-    /** raw request body captured before parsing */
-    rawBody?: string;
+    rawBodyText?: string;
+    rawBodyBuffer?: Buffer;
   }
 }

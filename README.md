@@ -101,7 +101,7 @@ npm run dev
 ```
 
 **Note**
-- If a request's body cannot be stored as JSON, it will be returned as a string instead.
+- If a request's body cannot be returned as JSON, it will be returned as a string instead.
 
 **Unsuccessful responses**
 - 401 `{"error":"Unauthorized: No token provided"}`

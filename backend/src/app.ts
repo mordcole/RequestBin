@@ -10,7 +10,8 @@ const app = express();
 app.use(cors());
 
 const captureRaw = (req: Request, res: any, buf: Buffer) => {
-  req.rawBody = buf.toString();
+  req.rawBodyBuffer = buf;
+  req.rawBodyText = buf.toString();
 };
 
 app.use(express.json({ verify: captureRaw }));
@@ -52,6 +53,10 @@ app.delete('/bins/:binRoute', async (req, res) => {
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.log(err);
+
+  if (err instanceof SyntaxError && 'body' in err) {
+    return res.status(400).json({ error: 'Invalid JSON' });
+  }
 
   if (err instanceof ApiError) {
     return res.status(err.status).json({ error: err.message });
