@@ -1,7 +1,10 @@
 import axios from "axios";
 import type { Bin, CreateBinPayload } from "../../types/request-bin";
 
-const createBin = async (url: string): Promise<Bin> => {
+type BinRoute = Bin["bin_route"];
+type BinToken = Bin["token"];
+
+const createBin = async (url: BinRoute): Promise<Bin> => {
   try {
     const payload: CreateBinPayload = {
       bin_route: url,
@@ -14,4 +17,18 @@ const createBin = async (url: string): Promise<Bin> => {
   }
 };
 
-export { createBin };
+const deleteBin = async (
+  binRoute: BinRoute,
+  token: BinToken,
+): Promise<void> => {
+  try {
+    await axios.delete(`api/bins/${binRoute}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  } catch (error) {
+    console.error("Failed to delete bin.", error);
+    throw error;
+  }
+};
+
+export { createBin, deleteBin };
