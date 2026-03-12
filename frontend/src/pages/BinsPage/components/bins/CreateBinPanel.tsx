@@ -53,8 +53,8 @@ export const CreateBinPanel = ({
             placeholder="e.g., Stripe Webhooks"
             value={value}
             onChange={(event) => onChange(event.target.value)}
-            maxLength={64}
-            pattern="[a-zA-Z0-9_-]{3,64}"
+            maxLength={15}
+            pattern="[a-zA-Z0-9_-]{3,15}"
             title="Use 3-64 characters: letters, numbers, hyphens, underscores."
           />
         </label>

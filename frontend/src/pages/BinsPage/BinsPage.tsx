@@ -25,7 +25,7 @@ const BinsPage = () => {
   const navigate = useNavigate();
   const { orderedBins, addBin, removeBin } = useBinOrder();
 
-  const BIN_ROUTE_PATTERN = /^[a-zA-Z0-9_-]{3,64}$/;
+  const BIN_ROUTE_PATTERN = /^[a-zA-Z0-9_-]{3,15}$/;
 
   const handleCreateBin = async (): Promise<void> => {
     const createdRoute = urlInput;
@@ -34,8 +34,8 @@ const BinsPage = () => {
       alert("Bin URL cannot be empty.");
       return;
     }
-    if (trimmed.length > 64) {
-      alert("Bin URL must be 64 characters or fewer.");
+    if (trimmed.length > 15) {
+      alert("Bin URL must be 15 characters or fewer.");
       return;
     }
     if (!BIN_ROUTE_PATTERN.test(trimmed)) {
@@ -161,9 +161,7 @@ const BinsPage = () => {
           </>
         }
       >
-        <p className="modal__lead">
-          Congratulations, you have created a bin.
-        </p>
+        <p className="modal__lead">Congratulations, you have created a bin.</p>
         {createdBin && (
           <div className="modal__details">
             <div className="modal__detail">
