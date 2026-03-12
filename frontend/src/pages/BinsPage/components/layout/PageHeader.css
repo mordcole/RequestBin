@@ -16,7 +16,8 @@
 
 .page-header__subtitle {
   margin: 0;
-  font-size: 13px;
+  font-size: 0.875rem;
+  font-weight: 500;
   color: #6b7280;
 }
 

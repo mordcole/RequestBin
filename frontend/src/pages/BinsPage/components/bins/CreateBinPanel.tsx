@@ -1,4 +1,5 @@
 import type { FormEvent } from "react";
+import { Brand } from "../../../shared/Brand/Brand";
 import "./CreateBinPanel.css";
 
 type CreateBinPanelProps = {
@@ -22,25 +23,7 @@ export const CreateBinPanel = ({
   return (
     <div className="create-bin">
       <div className="create-bin__brand">
-        <div className="create-bin__brand-icon">
-          <svg
-            className="create-bin__brand-icon-svg"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M13 10V3L4 14h7v7l9-11h-7z"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2.5"
-            ></path>
-          </svg>
-        </div>
-        <div>
-          <div className="create-bin__brand-title">RequestBin</div>
-          <div className="create-bin__brand-subtitle">Webhook inspector</div>
-        </div>
+        <Brand subtitle="Webhook & Request Inspector" />
       </div>
 
       <h2 className="create-bin__section-title">Create New Bin</h2>
@@ -55,7 +38,7 @@ export const CreateBinPanel = ({
             onChange={(event) => onChange(event.target.value)}
             maxLength={15}
             pattern="[a-zA-Z0-9_-]{3,15}"
-            title="Use 3-64 characters: letters, numbers, hyphens, underscores."
+            title="Use 3-15 characters: letters, numbers, hyphens, underscores."
           />
         </label>
 

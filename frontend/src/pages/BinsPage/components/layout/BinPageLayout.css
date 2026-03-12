@@ -2,6 +2,8 @@
   display: flex;
   min-height: 100vh;
   background-color: #f9fafb;
+  font-family: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 .bin-layout__sidebar {

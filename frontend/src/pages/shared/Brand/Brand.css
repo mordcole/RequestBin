@@ -1,0 +1,47 @@
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand__icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  background: #4f46e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand__icon-svg {
+  width: 20px;
+  height: 20px;
+  color: #ffffff;
+}
+
+.brand__title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #111827;
+}
+
+.brand__subtitle {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.brand--lg .brand__icon {
+  width: 36px;
+  height: 36px;
+}
+
+.brand--lg .brand__title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.brand--lg .brand__subtitle {
+  font-size: 13px;
+}

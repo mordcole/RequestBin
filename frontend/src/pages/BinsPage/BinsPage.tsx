@@ -117,7 +117,7 @@ const BinsPage = () => {
     >
       <PageHeader
         title="Your Bins"
-        subtitle="Manage your active webhook endpoints and inspect payloads."
+        subtitle="Capture and inspect incoming webhooks or any HTTP request payloads."
       />
       <div className="bins-page__grid" key={`bins-${binsVersion}`}>
         {orderedBins.length === 0 ? (

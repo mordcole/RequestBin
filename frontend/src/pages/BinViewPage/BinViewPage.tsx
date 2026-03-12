@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { getBin } from "./BinViewService";
 import BinInfoBar from "./components/BinInfoBar";
 import RequestCard from "./components/RequestCard";
+import { Brand } from "../shared/Brand/Brand";
 import type { BinRequest } from "../../types/request-bin";
 import "./BinViewPage.css";
 
@@ -23,14 +24,47 @@ const BinViewPage = () => {
       .catch((error) => {
         console.error("getBin failed:", error);
       });
-  }, []);
+  }, [binRoute]);
+
+  useEffect(() => {
+    if (!binRoute) return;
+
+    const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+    const wsUrl = `${protocol}://${window.location.hostname}:3000`;
+    const ws = new WebSocket(wsUrl);
+
+    ws.addEventListener("open", () => {
+      ws.send(binRoute);
+    });
+
+    ws.addEventListener("message", (event) => {
+      try {
+        const payload = JSON.parse(event.data);
+        if (payload.bin_route !== binRoute) return;
+        setRequests((prev) => [payload.request, ...prev]);
+      } catch (error) {
+        console.error("WebSocket message parse error:", error);
+      }
+    });
+
+    ws.addEventListener("error", (error) => {
+      console.error("WebSocket error:", error);
+    });
+
+    return () => {
+      ws.close();
+    };
+  }, [binRoute]);
 
   return (
     <div className="bin-view-page">
       <div className="bin-view-container">
-        <Link to="/" className="bin-view-back-link">
-          ← Back to Bins
-        </Link>
+        <div className="bin-view-topbar">
+          <Brand subtitle="Webhook & Request Inspector" size="lg" />
+          <Link to="/" className="bin-view-back-link">
+            ← Back to Bins
+          </Link>
+        </div>
         {/* Title + status */}
         <div className="bin-view-title-row">
           <h1 className="bin-view-heading">Incoming Requests</h1>

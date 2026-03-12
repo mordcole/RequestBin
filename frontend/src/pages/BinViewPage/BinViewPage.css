@@ -25,12 +25,22 @@
   margin: 0 auto;
 }
 
+.bin-view-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
 .bin-view-back-link {
   color: #4f46e5;
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
   transition: color 0.15s ease;
+  white-space: nowrap;
 }
 
 .bin-view-back-link:hover {
