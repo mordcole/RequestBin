@@ -7,6 +7,7 @@ import { BinPageLayout } from "./components/layout/BinPageLayout";
 import { PageHeader } from "./components/layout/PageHeader";
 import { CreateBinPanel } from "./components/bins/CreateBinPanel";
 import { BinCard } from "./components/bins/BinCard";
+import { Modal } from "./components/common/Modal";
 import { BINS_STORAGE_PREFIX, useBinOrder } from "./hooks/useBinOrder";
 import "./BinsPage.css";
 
@@ -16,15 +17,22 @@ const BinsPage = () => {
   const [urlInput, setUrlInput] = useState<BinRoute>(generateBinId());
   const [isCreating, setIsCreating] = useState(false);
   const [binsVersion, setBinsVersion] = useState(0);
+  const [createdBin, setCreatedBin] = useState<{
+    route: BinRoute;
+    token: string;
+  } | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<BinRoute | null>(null);
   const navigate = useNavigate();
   const { orderedBins, addBin, removeBin } = useBinOrder();
 
   const handleCreateBin = async (): Promise<void> => {
+    const createdRoute = urlInput;
     try {
       setIsCreating(true);
       const response = await createBin(urlInput);
       localStorage.setItem(`${BINS_STORAGE_PREFIX}${urlInput}`, response.token);
       addBin(urlInput);
+      setCreatedBin({ route: createdRoute, token: response.token });
       setUrlInput(generateBinId());
       setBinsVersion((version) => version + 1);
     } catch (error: unknown) {
@@ -39,12 +47,12 @@ const BinsPage = () => {
     navigate(`/bins/${binId}`);
   };
 
-  const handleDeleteBin = async (binId: BinRoute): Promise<void> => {
+  const handleDeleteBin = async (binId: BinRoute): Promise<boolean> => {
     const storageKey = `${BINS_STORAGE_PREFIX}${binId}`;
     const token = localStorage.getItem(storageKey);
     if (!token) {
       alert("Missing bin token. Unable to delete.");
-      return;
+      return false;
     }
 
     try {
@@ -52,10 +60,27 @@ const BinsPage = () => {
       localStorage.removeItem(storageKey);
       removeBin(binId);
       setBinsVersion((version) => version + 1);
+      return true;
     } catch (error) {
       alert("Failed to delete bin.");
       console.error(error);
+      return false;
     }
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!deleteTarget) return;
+    const deleted = await handleDeleteBin(deleteTarget);
+    if (deleted) {
+      setDeleteTarget(null);
+    }
+  };
+
+  const handleOpenCreatedBin = () => {
+    if (!createdBin) return;
+    const route = createdBin.route;
+    setCreatedBin(null);
+    handleOpenBin(route);
   };
 
   return (
@@ -86,12 +111,84 @@ const BinsPage = () => {
                 key={binId}
                 route={binId}
                 onOpen={() => handleOpenBin(binId)}
-                onDelete={() => handleDeleteBin(binId)}
+                onDelete={() => setDeleteTarget(binId)}
               />
             );
           })
         )}
       </div>
+      <Modal
+        open={createdBin !== null}
+        title="Bin created"
+        onClose={() => setCreatedBin(null)}
+        footer={
+          <>
+            <button
+              type="button"
+              className="modal__button"
+              onClick={() => setCreatedBin(null)}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              className="modal__button modal__button--primary"
+              onClick={handleOpenCreatedBin}
+            >
+              Open bin
+            </button>
+          </>
+        }
+      >
+        <p className="modal__lead">
+          Congratulations, you have created a bin.
+        </p>
+        {createdBin && (
+          <div className="modal__details">
+            <div className="modal__detail">
+              <span className="modal__label">Bin Route</span>
+              <code className="modal__code">{createdBin.route}</code>
+            </div>
+            <div className="modal__detail">
+              <span className="modal__label">Auth Token</span>
+              <code className="modal__code">{createdBin.token}</code>
+            </div>
+          </div>
+        )}
+      </Modal>
+      <Modal
+        open={deleteTarget !== null}
+        title="Delete bin?"
+        onClose={() => setDeleteTarget(null)}
+        footer={
+          <>
+            <button
+              type="button"
+              className="modal__button"
+              onClick={() => setDeleteTarget(null)}
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              className="modal__button modal__button--danger"
+              onClick={handleConfirmDelete}
+            >
+              Delete bin
+            </button>
+          </>
+        }
+      >
+        <p className="modal__lead">
+          This will permanently delete the bin and all stored requests.
+        </p>
+        {deleteTarget && (
+          <div className="modal__detail">
+            <span className="modal__label">Bin Route</span>
+            <code className="modal__code">{deleteTarget}</code>
+          </div>
+        )}
+      </Modal>
     </BinPageLayout>
   );
 };
