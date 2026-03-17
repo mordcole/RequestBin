@@ -1,4 +1,4 @@
-
+import 'dotenv/config'
 import app from './app.js';
 import db from './services/db/index.js';
 import http from 'http';
