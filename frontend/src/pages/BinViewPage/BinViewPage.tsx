@@ -30,7 +30,7 @@ const BinViewPage = () => {
     if (!binRoute) return;
 
     const protocol = window.location.protocol === "https:" ? "wss" : "ws";
-    const wsUrl = `${protocol}://${window.location.hostname}`;
+    const wsUrl = `${protocol}://${window.location.hostname}/ws`;
     const ws = new WebSocket(wsUrl);
 
     ws.addEventListener("open", () => {
