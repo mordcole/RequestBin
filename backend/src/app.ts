@@ -70,6 +70,10 @@ app.delete('/bins/:binRoute', async (req, res) => {
   res.sendStatus(204);
 });
 
+app.get('/health', (req: Request, res: Response) => {
+  res.status(200).json({ status: 'ok' });
+});
+
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.log(err);
 
