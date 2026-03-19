@@ -54,6 +54,9 @@ app.delete('/bins/:binRoute', async (req, res) => {
     await deleteBin(binRoute, req);
     res.sendStatus(204);
 });
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok' });
+});
 app.use((err, req, res, next) => {
     console.log(err);
     if (err instanceof SyntaxError && 'body' in err) {
